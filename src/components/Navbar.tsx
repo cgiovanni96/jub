@@ -1,4 +1,5 @@
 import React, { FC } from 'react'
+import { up } from 'styled-breakpoints'
 import styled from 'styled-components'
 
 const Navbar: FC = ({}) => {
@@ -14,9 +15,14 @@ const Navbar: FC = ({}) => {
 export default Navbar
 
 const Base = styled.div`
-	width: 80%;
-	margin: 3rem 0;
-	margin-left: auto;
+	margin: 1rem 0;
+	margin-left: 0.5rem;
+
+	${up('sm')} {
+		width: 80%;
+		margin: 3rem 0;
+		margin-left: auto;
+	}
 `
 
 const Title = styled.h1`
