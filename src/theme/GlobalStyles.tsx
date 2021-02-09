@@ -5,6 +5,10 @@ import reset from 'styled-reset'
 const GlobalStyles = createGlobalStyle`
     ${reset}
 
+    html * {
+        box-sizing: border-box;
+    }
+
     body {
         /* width: 100%; */
         /* margin: 0 1em; */
