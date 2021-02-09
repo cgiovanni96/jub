@@ -18,7 +18,9 @@ const Job: React.FC<JobProps> = ({ job }) => {
 				<Company>{job.company}</Company>
 				<Title>{job.title}</Title>
 				<Footer>
-					<Type>{job.type}</Type>
+					<TypeBox>
+						<Type>{job.type}</Type>
+					</TypeBox>
 					<Box>
 						<Where>{job.location}</Where>
 						<When>
@@ -55,6 +57,12 @@ const Logo = styled.div`
 	position: relative;
 	display: flex;
 	background: #f2f2f2;
+	margin-left: 1rem;
+
+	${up('sm')} {
+		margin-left: 0;
+	}
+
 	& > img {
 		display: inline-block;
 		width: 100%;
@@ -63,26 +71,46 @@ const Logo = styled.div`
 	}
 `
 const Info = styled.div`
+	margin: 1rem 0;
+	margin-left: 1rem;
 	flex: 1;
 	display: flex;
 	flex-direction: column;
-	margin-left: 2rem;
+	justify-content: flex-start;
+	font-size: ${({ theme }) => theme.typo.size.small};
 	font-family: ${({ theme }) => theme.typo.family.main};
 	color: ${({ theme }) => theme.palette.text.primary};
+	${up('sm')} {
+		margin: 0;
+		margin-left: 1rem;
+	}
 `
 const Company = styled.div`
 	font-weight: ${({ theme }) => theme.typo.weight.bold};
 `
 const Title = styled.h2`
+	margin-top: 1rem;
+	font-size: ${({ theme }) => theme.typo.size.big};
 	font-weight: ${({ theme }) => theme.typo.weight.regular};
 `
 const Footer = styled.div`
 	flex: 1;
 	display: flex;
-	justify-content: space-between;
-	align-items: center;
+	flex-direction: column;
+
+	${up('sm')} {
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+	}
 `
+
+const TypeBox = styled.div`
+	display: flex;
+`
+
 const Type = styled.div`
+	margin: 1rem 0;
 	font-weight: ${({ theme }) => theme.typo.weight.bold};
 	padding: 0.5rem 1rem;
 	border-radius: 0.5rem;
