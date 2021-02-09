@@ -1,9 +1,12 @@
 import { up } from 'styled-breakpoints'
 import { createGlobalStyle } from 'styled-components'
+import reset from 'styled-reset'
 
 const GlobalStyles = createGlobalStyle`
+    ${reset}
+
     body {
-        width: 100%;
+        /* width: 100%; */
         /* margin: 0 1em; */
         display: flex;
         flex-direction: column;

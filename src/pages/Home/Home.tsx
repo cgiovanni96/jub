@@ -1,8 +1,9 @@
-import React, { FC, Fragment } from 'react'
+import React, { FC } from 'react'
 import { useQuery } from 'react-query'
+import styled from 'styled-components'
 import jobs from '../../queries/jobs'
 import { QueryResponse } from '../../utility'
-import Job from './Job'
+import Jobs from './Jobs/Jobs'
 
 const Home: FC = ({}) => {
 	const { isLoading, error, data } = useQuery<QueryResponse, Error>(
@@ -12,20 +13,19 @@ const Home: FC = ({}) => {
 
 	if (isLoading) return <div>Loading</div>
 
-	if (error) return <div>An error has occurred</div>
+	if (error || !data) return <div>An error has occurred</div>
 
 	return (
-		<>
-			{data &&
-				data.map((job) => {
-					return (
-						<Fragment key={job.id}>
-							<Job job={job} />
-						</Fragment>
-					)
-				})}
-		</>
+		<Base>
+			<Jobs jobs={data} />
+		</Base>
 	)
 }
 
 export default Home
+
+const Base = styled.div`
+	margin: 0 1rem;
+	display: flex;
+	flex-direction: column;
+`

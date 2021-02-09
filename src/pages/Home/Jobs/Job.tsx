@@ -1,7 +1,8 @@
 import { formatDistanceToNow } from 'date-fns'
 import React from 'react'
+import { up } from 'styled-breakpoints'
 import styled from 'styled-components'
-import { JobType } from '../../utility'
+import { JobType } from '../../../utility'
 
 interface JobProps {
 	job: JobType
@@ -36,21 +37,26 @@ export default Job
 
 const Base = styled.div`
 	width: 100%;
-	margin-bottom: 1em;
-	padding: 1em 2em;
+	margin-bottom: 1rem;
 	display: flex;
 	align-items: center;
 	background: ${({ theme }) => theme.palette.accent.default};
 	border-radius: 0.5em;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+	${up('sm')} {
+		padding: 1rem;
+	}
 `
 
 const Logo = styled.div`
 	width: 90px;
 	height: 90px;
+	padding: 1em;
 	position: relative;
-
+	display: flex;
+	background: #f2f2f2;
 	& > img {
+		display: inline-block;
 		width: 100%;
 		height: 100%;
 		object-fit: fill;
