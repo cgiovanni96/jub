@@ -1,5 +1,6 @@
 import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { up } from 'styled-breakpoints'
 import styled from 'styled-components'
 import Navbar from './components/Navbar'
 import Home from './pages/Home/Home'
@@ -27,4 +28,8 @@ const Wrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	margin: 0 1rem;
+	${up('sm')} {
+		margin: 0;
+	}
 `

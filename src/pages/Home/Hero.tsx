@@ -1,11 +1,12 @@
 import React, { FC } from 'react'
+import { up } from 'styled-breakpoints'
 import styled from 'styled-components'
 
 const Hero: FC = ({}) => {
 	return (
 		<Base>
 			<Form>
-				<Input placeholder={'Title, companies, expertise or benefits'} />
+				<Input placeholder={'Title, companies, exper...'} />
 				<SearchButton>Search</SearchButton>
 			</Form>
 		</Base>
@@ -30,12 +31,15 @@ const Base = styled.div`
 const Form = styled.form`
 	display: flex;
 	justify-content: space-between;
-	width: 70%;
+	width: 90%;
 	background: ${({ theme }) => theme.palette.accent.default};
 	font-size: ${({ theme }) => theme.typo.size.small};
 	color: ${({ theme }) => theme.palette.text.secondary};
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 	border-radius: 0.5rem;
+	${up('sm')} {
+		width: 70%;
+	}
 `
 
 const Input = styled.input`
@@ -53,9 +57,13 @@ const Input = styled.input`
 const SearchButton = styled.button`
 	border: none;
 	margin: 0.4rem;
-	padding: 1rem 2rem;
 	color: white;
+	width: 140px;
+	height: 45px;
 	background: ${({ theme }) => theme.palette.accent.primary};
 	font-size: ${({ theme }) => theme.typo.size.medium};
 	border-radius: 0.5rem;
+	${up('sm')} {
+		/* padding: 1rem 2rem; */
+	}
 `
