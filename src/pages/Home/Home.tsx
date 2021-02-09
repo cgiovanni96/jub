@@ -3,6 +3,7 @@ import { useQuery } from 'react-query'
 import styled from 'styled-components'
 import jobs from '../../queries/jobs'
 import { QueryResponse } from '../../utility'
+import Hero from './Hero'
 import Jobs from './Jobs/Jobs'
 
 const Home: FC = ({}) => {
@@ -17,6 +18,7 @@ const Home: FC = ({}) => {
 
 	return (
 		<Base>
+			<Hero />
 			<Jobs jobs={data} />
 		</Base>
 	)
@@ -25,6 +27,7 @@ const Home: FC = ({}) => {
 export default Home
 
 const Base = styled.div`
+	width: 100%;
 	margin: 0 1rem;
 	display: flex;
 	flex-direction: column;
