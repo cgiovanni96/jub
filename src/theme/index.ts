@@ -32,6 +32,11 @@ const theme: DefaultTheme = {
 		md: '768px',
 		lg: '992px',
 		xl: '1200px'
+	},
+	transitions: {
+		small: '0.3s',
+		medium: '0.5s',
+		long: '0.7s'
 	}
 }
 

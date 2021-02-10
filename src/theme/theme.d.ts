@@ -40,5 +40,11 @@ declare module 'styled-components' {
 			lg: string
 			xl: string
 		}
+
+		transitions: {
+			small: string
+			medium: string
+			long: string
+		}
 	}
 }
