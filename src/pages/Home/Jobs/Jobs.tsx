@@ -9,18 +9,26 @@ interface JobsProps {
 }
 
 const Jobs: React.FC<JobsProps> = ({ jobs }) => {
-	const [page, setPage] = useState(0)
+	const [currentPage, setCurrentPage] = useState(1)
 	const [paginatedJobs, setPaginatedJobs] = useState<JobType[]>([])
 	const pageLimit = 5
 
+	const pages = (): number[] => {
+		const pagesList: number[] = []
+		if (currentPage === 1) pagesList.push(...[1, 2, 3])
+		else pagesList.push(...[currentPage - 1, currentPage, currentPage + 1])
+		return pagesList
+	}
+
 	const jobPagination = () => {
-		const slice: JobType[] = jobs.slice(page, page + pageLimit)
+		const beginning = currentPage === 1 ? 0 : currentPage
+		const slice: JobType[] = jobs.slice(beginning, beginning + pageLimit)
 		setPaginatedJobs(slice)
 	}
 
 	useEffect(() => {
 		jobPagination()
-	}, [page])
+	}, [currentPage])
 
 	return (
 		<Base>
@@ -29,10 +37,20 @@ const Jobs: React.FC<JobsProps> = ({ jobs }) => {
 					return <Job key={job.id} job={job} />
 				})}
 			<Pagination>
-				{paginatedJobs.map((_, id) => {
+				{currentPage > 3 ? (
+					<>
+						<Page onClick={() => setCurrentPage(1)}>1</Page>
+						<Divider>...</Divider>
+					</>
+				) : null}
+				{pages().map((pg) => {
 					return (
-						<Page current={id === page} key={id} onClick={() => setPage(id)}>
-							{page + id}
+						<Page
+							key={pg}
+							current={currentPage === pg}
+							onClick={() => setCurrentPage(pg)}
+						>
+							{pg}
 						</Page>
 					)
 				})}
