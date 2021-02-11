@@ -1,38 +1,36 @@
 import React, { useEffect, useState } from 'react'
+import { useQuery } from 'react-query'
 import { up } from 'styled-breakpoints'
 import styled from 'styled-components'
-import { JobType } from '../../../utility'
+import jobsQuery from '../../../queries/jobs'
+import { JobType, QueryResponse } from '../../../utility'
+import { PAGE_LIMIT } from '../../../utility/constants'
+import { useGetPageList } from '../../../utility/hooks/useGetPageList'
 import Job from './Job'
 
-interface JobsProps {
-	jobs: JobType[]
-}
-
-const Jobs: React.FC<JobsProps> = ({ jobs }) => {
+const Jobs: React.FC = ({}) => {
 	const [currentPage, setCurrentPage] = useState(1)
 	const [paginatedJobs, setPaginatedJobs] = useState<JobType[]>([])
-	const pageLimit = 5
+	const { isLoading, error, data: jobs } = useQuery<QueryResponse, Error>(
+		'jobs',
+		() => jobsQuery('hello')
+	)
 
-	const pages = (): number[] => {
-		const pagesList: number[] = []
-		if (currentPage === 1) pagesList.push(...[1, 2, 3])
-		else if (currentPage % 10 === 0)
-			pagesList.push(...[currentPage - 2, currentPage - 1, currentPage])
-		else pagesList.push(...[currentPage - 1, currentPage, currentPage + 1])
-		return pagesList
-	}
-
+	const pageList = useGetPageList(currentPage)
 	const jobPagination = () => {
-		const beginning = (currentPage - 1) * pageLimit
-		const ending = currentPage * pageLimit
+		if (!jobs) return
+		const beginning = (currentPage - 1) * PAGE_LIMIT
+		const ending = currentPage * PAGE_LIMIT
 		const slice: JobType[] = jobs.slice(beginning, ending)
 		setPaginatedJobs([...slice])
 	}
 
 	useEffect(() => {
 		jobPagination()
-	}, [currentPage])
+	}, [currentPage, jobs])
 
+	if (isLoading) return <div>Loading</div>
+	if (error || !jobs) return <div>An error has occurred</div>
 	return (
 		<Base>
 			{paginatedJobs &&
@@ -46,17 +44,18 @@ const Jobs: React.FC<JobsProps> = ({ jobs }) => {
 						<Divider>...</Divider>
 					</>
 				) : null}
-				{pages().map((pg) => {
-					return (
-						<Page
-							key={pg}
-							current={currentPage === pg}
-							onClick={() => setCurrentPage(pg)}
-						>
-							{pg}
-						</Page>
-					)
-				})}
+				{pageList &&
+					pageList.map((pg) => {
+						return (
+							<Page
+								key={pg}
+								current={currentPage === pg}
+								onClick={() => setCurrentPage(pg)}
+							>
+								{pg}
+							</Page>
+						)
+					})}
 				{currentPage <= 8 ? (
 					<>
 						<Divider>...</Divider>

@@ -1,13 +1,21 @@
 import React, { FC } from 'react'
+import { useForm } from 'react-hook-form'
 import { up } from 'styled-breakpoints'
 import styled from 'styled-components'
 
 const Hero: FC = ({}) => {
+	const { register, handleSubmit } = useForm()
+	const onSubmit = (data: any) => console.log(data)
 	return (
 		<Base>
-			<Form>
-				<Input placeholder={'Title, companies, exper...'} />
-				<SearchButton>Search</SearchButton>
+			<Form onSubmit={handleSubmit(onSubmit)}>
+				<Input
+					placeholder={'Title, companies, exper...'}
+					name={'query'}
+					defaultValue={''}
+					ref={register}
+				/>
+				<SearchButton type={'submit'} value={'Search'} />
 			</Form>
 		</Base>
 	)
@@ -54,7 +62,7 @@ const Input = styled.input`
 	}
 `
 
-const SearchButton = styled.button`
+const SearchButton = styled.input`
 	border: none;
 	margin: 0.4rem;
 	color: white;
