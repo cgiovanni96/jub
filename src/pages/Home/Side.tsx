@@ -6,15 +6,19 @@ const Side: FC = ({}) => {
 	return (
 		<Base>
 			<Form>
-				<Type>Full Time</Type>
+				<Type>
+					<Check type="checkbox" id="type" name="type" />
+					<CheckLabel htmlFor="type">Full Time</CheckLabel>
+				</Type>
+
 				<Location>
 					<Label>LOCATION</Label>
 					<LocationInput placeholder={'City, state, zip code or country'} />
 				</Location>
 				<LocationList>
 					<ListElement>
-						<Radio type="radio" />
-						<RadioLabel>City</RadioLabel>
+						<Radio type="radio" name="city" id="city" />
+						<RadioLabel htmlFor="city">City</RadioLabel>
 					</ListElement>
 				</LocationList>
 			</Form>
@@ -39,7 +43,17 @@ const Form = styled.form`
 		margin: 1.2rem 0;
 	}
 `
-const Type = styled.div``
+const Type = styled.div`
+	display: flex;
+	align-items: center;
+`
+
+const Check = styled.input``
+
+const CheckLabel = styled.label`
+	margin-left: 0.5rem;
+`
+
 const Location = styled.div``
 const Label = styled.div`
 	color: ${({ theme }) => theme.palette.text.secondary};
