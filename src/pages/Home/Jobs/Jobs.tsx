@@ -21,9 +21,10 @@ const Jobs: React.FC<JobsProps> = ({ jobs }) => {
 	}
 
 	const jobPagination = () => {
-		const beginning = currentPage === 1 ? 0 : currentPage
-		const slice: JobType[] = jobs.slice(beginning, beginning + pageLimit)
-		setPaginatedJobs(slice)
+		const beginning = (currentPage - 1) * pageLimit
+		const ending = currentPage * pageLimit
+		const slice: JobType[] = jobs.slice(beginning, ending)
+		setPaginatedJobs([...slice])
 	}
 
 	useEffect(() => {
