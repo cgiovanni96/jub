@@ -16,6 +16,8 @@ const Jobs: React.FC<JobsProps> = ({ jobs }) => {
 	const pages = (): number[] => {
 		const pagesList: number[] = []
 		if (currentPage === 1) pagesList.push(...[1, 2, 3])
+		else if (currentPage % 10 === 0)
+			pagesList.push(...[currentPage - 2, currentPage - 1, currentPage])
 		else pagesList.push(...[currentPage - 1, currentPage, currentPage + 1])
 		return pagesList
 	}
@@ -55,8 +57,14 @@ const Jobs: React.FC<JobsProps> = ({ jobs }) => {
 						</Page>
 					)
 				})}
-				<Divider>...</Divider>
-				<Page>{jobs.length / 5}</Page>
+				{currentPage <= 8 ? (
+					<>
+						<Divider>...</Divider>
+						<Page onClick={() => setCurrentPage(jobs.length / 5)}>
+							{jobs.length / 5}
+						</Page>
+					</>
+				) : null}
 			</Pagination>
 		</Base>
 	)
