@@ -12,8 +12,7 @@ const Hero: FC = ({}) => {
 	const { register, handleSubmit } = useForm<DescriptionFormType>()
 	const { setQuery } = useContext(QueryContext)
 	const onSubmit = handleSubmit(({ description }) => {
-		const newQuery = '?description=' + description
-		if (setQuery) setQuery(newQuery)
+		if (setQuery) setQuery({ description })
 	})
 	return (
 		<Base>

@@ -12,10 +12,11 @@ import Job from './Job'
 const Jobs: React.FC = ({}) => {
 	const [currentPage, setCurrentPage] = useState(1)
 	const [paginatedJobs, setPaginatedJobs] = useState<JobType[]>([])
-	const queryContext = useContext(QueryContext)
+	const { query } = useContext(QueryContext)
+
 	const { isLoading, error, data: jobs } = useQuery<QueryResponse, Error>(
 		'jobs',
-		() => jobsQuery(queryContext.query)
+		() => jobsQuery(query)
 	)
 
 	const pageList = useGetPageList(currentPage)

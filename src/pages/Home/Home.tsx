@@ -1,13 +1,13 @@
 import React, { FC, useState } from 'react'
 import { up } from 'styled-breakpoints'
 import styled from 'styled-components'
-import { QueryContext } from '../../context/QueryContext'
+import { defaultQuery, IQuery, QueryContext } from '../../context/QueryContext'
 import Hero from './Hero'
 import Jobs from './Jobs/Jobs'
 import Side from './Side'
 
 const Home: FC = ({}) => {
-	const [query, setQuery] = useState('')
+	const [query, setQuery] = useState<IQuery>(defaultQuery)
 	return (
 		<QueryContext.Provider value={{ query, setQuery }}>
 			<Base>
