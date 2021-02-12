@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 import { up } from 'styled-breakpoints'
 import styled from 'styled-components'
+import { QueryContext } from '../../../context/QueryContext'
 import jobsQuery from '../../../queries/jobs'
 import { JobType, QueryResponse } from '../../../utility'
 import { PAGE_LIMIT } from '../../../utility/constants'
@@ -11,9 +12,10 @@ import Job from './Job'
 const Jobs: React.FC = ({}) => {
 	const [currentPage, setCurrentPage] = useState(1)
 	const [paginatedJobs, setPaginatedJobs] = useState<JobType[]>([])
+	const queryContext = useContext(QueryContext)
 	const { isLoading, error, data: jobs } = useQuery<QueryResponse, Error>(
 		'jobs',
-		() => jobsQuery('hello')
+		() => jobsQuery(queryContext.query)
 	)
 
 	const pageList = useGetPageList(currentPage)

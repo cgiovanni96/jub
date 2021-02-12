@@ -1,13 +1,8 @@
-import { createContext, useContext } from 'react'
+import { createContext } from 'react'
 
 export interface IQueryContext {
 	query: string
-	setQuery: (query: string) => void
+	setQuery?: React.Dispatch<React.SetStateAction<string>>
 }
 
-export const QueryContext = createContext<IQueryContext>({
-	query: '',
-	setQuery: () => console.warn('No query provided')
-})
-
-export const useQueryContext = useContext(QueryContext)
+export const QueryContext = createContext<IQueryContext>({ query: '' })

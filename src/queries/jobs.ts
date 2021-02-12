@@ -2,8 +2,10 @@ import { BASE_URI } from '../client/constants'
 import { QueryResponse } from '../utility'
 
 const jobs = async (query: string): Promise<QueryResponse> => {
-	console.log('Query', query)
-	const res: Response = await fetch(BASE_URI)
+	const URI = BASE_URI + query
+	console.log('URI', URI)
+	const res: Response = await fetch(URI)
+	console.log('RES', res)
 	return res.json()
 }
 

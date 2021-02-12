@@ -1,17 +1,26 @@
-import React, { FC } from 'react'
+import React, { FC, useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import { up } from 'styled-breakpoints'
 import styled from 'styled-components'
+import { QueryContext } from '../../context/QueryContext'
+
+type DescriptionFormType = {
+	description: string
+}
 
 const Hero: FC = ({}) => {
-	const { register, handleSubmit } = useForm()
-	const onSubmit = (data: any) => console.log(data)
+	const { register, handleSubmit } = useForm<DescriptionFormType>()
+	const { setQuery } = useContext(QueryContext)
+	const onSubmit = handleSubmit(({ description }) => {
+		const newQuery = '?description=' + description
+		if (setQuery) setQuery(newQuery)
+	})
 	return (
 		<Base>
-			<Form onSubmit={handleSubmit(onSubmit)}>
+			<Form onSubmit={onSubmit}>
 				<Input
 					placeholder={'Title, companies, exper...'}
-					name={'query'}
+					name={'description'}
 					defaultValue={''}
 					ref={register}
 				/>

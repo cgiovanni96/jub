@@ -1,19 +1,23 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import { up } from 'styled-breakpoints'
 import styled from 'styled-components'
+import { QueryContext } from '../../context/QueryContext'
 import Hero from './Hero'
 import Jobs from './Jobs/Jobs'
 import Side from './Side'
 
 const Home: FC = ({}) => {
+	const [query, setQuery] = useState('')
 	return (
-		<Base>
-			<Hero />
-			<Main>
-				<Side />
-				<Jobs />
-			</Main>
-		</Base>
+		<QueryContext.Provider value={{ query, setQuery }}>
+			<Base>
+				<Hero />
+				<Main>
+					<Side />
+					<Jobs />
+				</Main>
+			</Base>
+		</QueryContext.Provider>
 	)
 }
 
