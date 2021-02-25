@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useQuery } from 'react-query'
+import { useQuery, useQueryClient } from 'react-query'
 import { up } from 'styled-breakpoints'
 import styled from 'styled-components'
 import { QueryContext } from '../../../context/QueryContext'
@@ -13,6 +13,11 @@ const Jobs: React.FC = ({}) => {
 	const [currentPage, setCurrentPage] = useState(1)
 	const [paginatedJobs, setPaginatedJobs] = useState<JobType[]>([])
 	const { query } = useContext(QueryContext)
+	const client = useQueryClient()
+
+	useEffect(() => {
+		client.invalidateQueries('jobs')
+	}, [query])
 
 	const { isLoading, error, data: jobs } = useQuery<QueryResponse, Error>(
 		'jobs',
@@ -33,7 +38,7 @@ const Jobs: React.FC = ({}) => {
 	}, [currentPage, jobs])
 
 	if (isLoading) return <div>Loading</div>
-	if (error || !jobs) return <div>An error has occurred</div>
+	if (error || !jobs) return <div>{error?.message}</div>
 	return (
 		<Base>
 			{paginatedJobs &&

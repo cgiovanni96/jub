@@ -1,26 +1,66 @@
-import React, { FC } from 'react'
+import React, { FC, useContext, useState } from 'react'
+import { useForm } from 'react-hook-form'
 import { up } from 'styled-breakpoints'
 import styled from 'styled-components'
+import { QueryContext } from '../../context/QueryContext'
+
+export type City = {
+	id: string
+	name: string
+}
+
+type FormData = {
+	type: string
+	location: string
+}
 
 const Side: FC = ({}) => {
+	const { register, handleSubmit } = useForm<FormData>()
+	const { query, setQuery } = useContext(QueryContext)
+
+	const [cities] = useState<City[]>([
+		{ id: 'london', name: 'London' },
+		{ id: 'amstedam', name: 'Amsterdam' },
+		{ id: 'new+york', name: 'New York' },
+		{ id: 'berlin', name: 'Berlin' }
+	])
+
+	const onSubmit = handleSubmit(({ type, location }) => {
+		if (setQuery)
+			setQuery({ location, type: !!type, description: query.description })
+	})
 	return (
 		<Base>
-			<Form>
+			<Form onSubmit={onSubmit}>
 				<Type>
-					<Check type="checkbox" id="type" name="type" />
+					<Check type="checkbox" id="type" name="type" ref={register} />
 					<CheckLabel htmlFor="type">Full Time</CheckLabel>
 				</Type>
 
 				<Location>
 					<Label>LOCATION</Label>
-					<LocationInput placeholder={'City, state, zip code or country'} />
+					<LocationInput
+						placeholder={'City, state, zip code or country'}
+						name="city"
+						id="city"
+						defaultValue=""
+					/>
 				</Location>
 				<LocationList>
-					<ListElement>
-						<Radio type="radio" name="city" id="city" />
-						<RadioLabel htmlFor="city">City</RadioLabel>
-					</ListElement>
+					{cities.map((city, id) => (
+						<ListElement key={id}>
+							<Radio
+								type="radio"
+								name="location"
+								value={city.id}
+								ref={register}
+							/>
+							<RadioLabel htmlFor={city.id}>{city.name}</RadioLabel>
+						</ListElement>
+					))}
 				</LocationList>
+
+				<input type="submit" value="submit" />
 			</Form>
 		</Base>
 	)
@@ -74,6 +114,7 @@ const LocationInput = styled.input`
 `
 const LocationList = styled.div`
 	display: flex;
+
 	flex-direction: column;
 `
 

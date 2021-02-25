@@ -1,7 +1,7 @@
 import { IQuery } from '../context/QueryContext'
 
 const stringifyQuery = (query: IQuery): string => {
-	let queryString = '&'
+	let queryString = '?'
 
 	if (query.description)
 		queryString = queryString + `description=${query.description}`
