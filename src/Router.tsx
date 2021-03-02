@@ -14,7 +14,7 @@ const Router: React.FC = () => {
 				<Wrapper>
 					<Routes>
 						<Route path="/" element={<Home />} />
-						<Route path="/" element={<Job />} />
+						<Route path="/job/:id" element={<Job />} />
 					</Routes>
 				</Wrapper>
 			</BrowserRouter>

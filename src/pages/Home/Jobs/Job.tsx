@@ -2,6 +2,8 @@ import { formatDistanceToNow } from 'date-fns'
 import React from 'react'
 import { up } from 'styled-breakpoints'
 import styled from 'styled-components'
+import { Link as RouterLink } from 'react-router-dom'
+
 import { JobType } from '../../../utility'
 
 interface JobProps {
@@ -16,7 +18,9 @@ const Job: React.FC<JobProps> = ({ job }) => {
 			</Logo>
 			<Info>
 				<Company>{job.company}</Company>
-				<Title>{job.title}</Title>
+				<Title>
+					<RouterLink to={`/job/${job.id}`}>{job.title}</RouterLink>
+				</Title>
 				<Footer>
 					<TypeBox>
 						<Type>{job.type}</Type>
@@ -92,6 +96,11 @@ const Title = styled.h2`
 	margin-top: 1rem;
 	font-size: ${({ theme }) => theme.typo.size.big};
 	font-weight: ${({ theme }) => theme.typo.weight.regular};
+
+	& > * {
+		color: inherit;
+		text-decoration: none;
+	}
 `
 const Footer = styled.div`
 	flex: 1;
