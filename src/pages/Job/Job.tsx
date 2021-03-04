@@ -4,6 +4,9 @@ import { useParams, Link as RouterLink } from 'react-router-dom'
 import { JobType } from '../../utility'
 import jobQuery from '../../queries/job'
 import styled from 'styled-components'
+import Text from '../../components/Text'
+import { up } from 'styled-breakpoints'
+import { formatDistanceToNow } from 'date-fns'
 
 const Job: FC = ({}) => {
 	const { id } = useParams()
@@ -22,7 +25,7 @@ const Job: FC = ({}) => {
 				</Back>
 				<Info>
 					<span>HOW TO APPLY</span>
-					<div>{job.how_to_apply} </div>
+					<SideLink href={job.how_to_apply}>Apply here</SideLink>
 				</Info>
 			</Side>
 
@@ -33,10 +36,14 @@ const Job: FC = ({}) => {
 							<Title>{job.title}</Title>
 							<Type>{job.type}</Type>
 						</Row>
-						<Time>Time</Time>
+						<Time>
+							{formatDistanceToNow(Date.parse(job.created_at), {
+								addSuffix: true
+							})}
+						</Time>
 					</TitleSection>
 					<CompanySection>
-						<Logo src={'./logo.jpg'} alt={'logo'} />
+						<Logo src={job.company_logo} alt={'logo'} />
 						<Col>
 							<Company>{job.company}</Company>
 							<Location>{job.location}</Location>
@@ -44,7 +51,9 @@ const Job: FC = ({}) => {
 					</CompanySection>
 				</Header>
 
-				<Description>{job.description}</Description>
+				<Description>
+					<Text text={job.description} />
+				</Description>
 			</Main>
 		</Base>
 	)
@@ -56,11 +65,21 @@ const Base = styled.div`
 	flex: 1;
 	width: 100%;
 	display: flex;
+	flex-direction: column;
 	font-family: ${({ theme }) => theme.typo.family.accent};
+	${up('sm')} {
+		flex-direction: row;
+	}
 `
 
 const Side = styled.aside`
 	flex: 1;
+`
+
+const SideLink = styled.a`
+	font-weight: bold;
+	color: inherit;
+	text-decoration: none;
 `
 
 const Back = styled.span`
@@ -72,6 +91,8 @@ const Back = styled.span`
 
 const Info = styled.div`
 	margin-top: 1rem;
+	display: flex;
+	flex-direction: column;
 
 	& > span {
 		display: inline-block;
@@ -82,8 +103,10 @@ const Info = styled.div`
 `
 
 const Main = styled.main`
-	flex: 3;
 	font-family: ${({ theme }) => theme.typo.family.main};
+	${up('sm')} {
+		flex: 3;
+	}
 `
 
 const Header = styled.header`
@@ -106,9 +129,13 @@ const Row = styled.div`
 const CompanySection = styled.div`
 	margin: 1rem 0;
 	display: flex;
+	align-items: center;
 `
 
-const Logo = styled.img``
+const Logo = styled.img`
+	width: 50px;
+	height: auto;
+`
 
 const Col = styled.div`
 	margin-left: 1rem;
